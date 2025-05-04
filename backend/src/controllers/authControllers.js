@@ -11,9 +11,7 @@ const registerUser = async(req, res) =>{
         })        
     }
     try {
-
         const userExist = await User.findOne({ $or : [{email}, {mobile}]})
-
         if (userExist) {
             return res.status(400).json({
                 success: false,
