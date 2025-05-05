@@ -6,18 +6,24 @@ const dotenv = require('dotenv');
 const category = require('./src/routes/categoryRoutes');
 const product = require('./src/routes/productRoutes');
 const { notFound, errorHandler } = require('./src/middleware/errorMiddleware');
+const cart = require('./src/routes/cartRoutes');
+const review = require('./src/routes/reviewRoutes');
 
 app.use(express.json());
 dotenv.config()
 
 //error handler
 
-app.use(notFound);
-app.use(errorHandler);
+// app.use(notFound);
+// app.use(errorHandler);
 
 app.use("/api/v1/user", user)
 app.use("/api/v1/category", category)
 app.use("/api/v1/product", product)
+app.use("/api/v1/cart", cart)
+app.use("/api/v1/review", review)
+
+
 
 
 
