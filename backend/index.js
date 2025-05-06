@@ -2,6 +2,7 @@ const express = require('express');
 const connectDb = require('./src/config/dbConfig');
 const user = require('./src/routes/authRoutes');
 const app = express()
+const cors = require('cors');            
 const dotenv = require('dotenv');
 const category = require('./src/routes/categoryRoutes');
 const product = require('./src/routes/productRoutes');
@@ -11,6 +12,7 @@ const review = require('./src/routes/reviewRoutes');
 
 app.use(express.json());
 dotenv.config()
+app.use(cors())
 
 //error handler
 

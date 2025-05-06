@@ -45,7 +45,7 @@ const registerUser = async(req, res) =>{
 const loginUser = async(req, res) => {
     const {mobile, password} = req.body
     if (!mobile || !password) {
-        return req.status(400).json({
+        return res.status(400).json({
             success: false,
             message: "All fields are required"
         })
@@ -65,7 +65,7 @@ const loginUser = async(req, res) => {
                 message: "Wrong password"
             })
         }
-        const token = await jwt.sign({user_id: userExist.id}, process.env.JWT_SECRATE_KEY, {expiresIn: "3h"})
+        const token = await jwt.sign({user_id: userExist.id, role:userExist.role}, process.env.JWT_SECRATE_KEY, {expiresIn: "3h"})
         return  res.status(201).json({
             success: true,
             message: "User logged in successfully",
@@ -73,6 +73,7 @@ const loginUser = async(req, res) => {
             user: {
                 id: userExist?._id,
                 firstname: userExist?.firstName,
+                role: userExist?.role
             }
         })
     } catch (error) {

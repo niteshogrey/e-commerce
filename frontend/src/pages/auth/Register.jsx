@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { registerApi } from "../../redux/api/authApi";
 
 const Register = () => {
+    const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -20,6 +23,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    dispatch(registerApi(formData))
   };
   return (
     <div className="flex flex-col md:flex-row items-center justify-evenly border p-8 h-screen bg-gradient-to-tr from-purple-100 to-blue-300/75">
@@ -34,7 +38,7 @@ const Register = () => {
 
       {/* Login Form */}
       <div className="flex flex-col justify-center items-start md:items-center w-full md:w-1/2 px-4 ">
-        <h2 className="text-5xl font-semibold">Register</h2>
+        <h2 className="text-5xl font-semibold poppins-semibold">Register</h2>
         <form className="flex flex-col gap-4 pt-10 w-full max-w-md">
           <div className="flex flex-col gap-2 font-semibold">
             <label className="text-lg">Enter First name</label>

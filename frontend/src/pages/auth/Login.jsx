@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginApi } from "../../redux/api/authApi";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     phone_number: "",
     password: "",
   });
+
+  const { user, token } = useSelector((state) => state.auth);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,13 +24,25 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(loginApi(formData))
     console.log(formData);
   };
+
+  useEffect(() => {
+    if (user && token) {
+      if (user.role === "admin") {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/customer");
+      }
+    }
+  }, [user, token, navigate]);
+
   return (
     <div className="flex flex-col md:flex-row items-center justify-evenly border p-8 h-screen bg-gradient-to-tr from-purple-100 to-blue-300/75">
       {/* Login Form */}
       <div className="flex flex-col justify-center items-start md:items-center w-full md:w-1/2 px-4 ">
-        <h2 className="text-5xl font-semibold">Login</h2>
+        <h2 className="text-5xl font-semibold poppins-semibold">Login</h2>
         <form className="flex flex-col gap-6 pt-10 w-full max-w-md">
           <div className="flex flex-col gap-2 font-semibold">
             <label className="text-lg">Enter Phone Number</label>
