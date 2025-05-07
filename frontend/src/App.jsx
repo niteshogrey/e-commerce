@@ -4,8 +4,9 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
-import AdminDashboard from "./pages/AdminDashboard";
 import Customer from "./pages/Customer";
+import AdminRoutes from "./admin/AdminRoutes";
+import CustomerRoutes from "./customerRoutes";
 
 function App() {
   return (
@@ -15,21 +16,22 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
-          path="/admin-dashboard"
+          path="/admin/*"
           element={
-            <ProtectedRoute role={["admin"]}>
-              <AdminDashboard />
+            <ProtectedRoute role="admin">
+              <AdminRoutes />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/customer"
+          path="/customer/*"
           element={
-            <ProtectedRoute role={["customer"]}>
-              <Customer />
+            <ProtectedRoute role="customer">
+              <CustomerRoutes />
             </ProtectedRoute>
           }
         />
+         
       </Routes>
     </BrowserRouter>
   );

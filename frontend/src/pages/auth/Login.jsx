@@ -12,7 +12,8 @@ const Login = () => {
   });
 
   const { user, token } = useSelector((state) => state.auth);
-
+ console.log(user);
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +32,7 @@ const Login = () => {
   useEffect(() => {
     if (user && token) {
       if (user.role === "admin") {
-        navigate("/admin-dashboard");
+        navigate("/admin");
       } else {
         navigate("/customer");
       }
