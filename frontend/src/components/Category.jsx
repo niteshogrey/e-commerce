@@ -1,9 +1,42 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategoryApi } from "../redux/api/categoryApi";
 
 const Category = () => {
-  return (
-    <div>Category</div>
-  )
-}
+  const { category, loading } = useSelector((state) => state.category);
+  console.log(category);
+  const dispatch = useDispatch();
 
-export default Category
+  useEffect(() => {
+    dispatch(getAllCategoryApi());
+  }, [dispatch]);
+
+  if (loading) {
+    return <p className="text-center text-xl">Loading...</p>;
+  }
+
+  if (!category || category.length === 0) {
+    return <p className="text-center text-xl">No banners available</p>;
+  }
+
+  return (
+    <div className="mt-5 p-5">
+      <div>
+        <h3 className="text-3xl font-semibold">Categories</h3>
+      </div>
+      <div className="flex gap-8 mt-9">
+        {category.map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-center justify-center bg-white rounded-full h-28 w-28 border "
+          >
+            <img src={item.icon} className="h-12" alt="" srcset="" />
+            <p className="font-semibold ">{item.name}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Category;
