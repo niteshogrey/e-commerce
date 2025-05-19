@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllProductApi, getProductById } from "../api/productApi";
+import { getAllProductApi, getProductByCategoryId, getProductById } from "../api/productApi";
 
 const productSlice = createSlice({
     name:"product",
@@ -33,6 +33,18 @@ const productSlice = createSlice({
             state.loading = false
             state.error = action.payload
         })
+        .addCase(getProductByCategoryId.pending, (state)=>{
+            state.loading = true
+        })
+        .addCase(getProductByCategoryId.fulfilled, (state, action)=>{
+            state.loading = false
+            state.product = action.payload
+        })
+        .addCase(getProductByCategoryId.rejected, (state, action)=>{
+            state.loading = false
+            state.error = action.payload
+        })
+        
     }
 })
 

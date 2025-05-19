@@ -12,7 +12,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
@@ -24,7 +23,7 @@ function App() {
           }
         />
         <Route
-          path="/customer/*"
+          path="/*"
           element={
             <ProtectedRoute role="customer">
               <CustomerRoutes />

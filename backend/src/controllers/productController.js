@@ -36,7 +36,7 @@ const getProductsByCategoryId = async (req, res) => {
     const  {id}  = req.params;
     console.log(id);
     
-    const products = await Product.find({ category_id: "6817bf7ff573a80bbe86206e" }).populate("category_id");
+    const products = await Product.find({ category_id: id }).populate("category_id");
     if (products.length === 0) {
       return res.status(404).json({ error: "No products found for this category" });
     }

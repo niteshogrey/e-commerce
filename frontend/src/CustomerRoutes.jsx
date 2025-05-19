@@ -12,7 +12,6 @@ const CustomerRoutes = () => {
             <Route index element={<Home/>}  />
             <Route path='product-details/:id' element={<ProductDetail />} />
             <Route path='products' element={<AllProducts />} />
-
         </Route>
     </Routes>
   )

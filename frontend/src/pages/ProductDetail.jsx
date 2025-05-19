@@ -6,6 +6,7 @@ import CategoryHeader from '../components/CategoryHeader';
 import Button from '../components/atoms/Button';
 import { ShoppingCart } from 'lucide-react';
 import { Zap } from 'lucide-react';
+import { addToCart } from '../redux/api/cartApi';
 
 const ProductDetail = () => {
     const {id}  = useParams()
@@ -19,7 +20,11 @@ const ProductDetail = () => {
         if (id) {
             dispatch(getProductById(id))
         }
-    },[id, dispatch])    
+    },[id, dispatch])  
+    
+     const handleAddToCart = () => {
+    dispatch(addToCart({ product_id: product._id, quantity: 1 }));
+  };
     
   return (
     <div>
@@ -30,7 +35,7 @@ const ProductDetail = () => {
                     <img src={product.image_url} className='h-[65vh]' alt="" srcset="" />
                 </div>
                 <div className='flex items-center justify-center gap-2'>
-                    <Button className={"bg-amber-500 w-45 py-2 px-5 text-xl rounded"} icon={<ShoppingCart />} title={"Add to cart"} />
+                    <Button className={"bg-amber-500 w-45 py-2 px-5 text-xl rounded"} icon={<ShoppingCart />} title={"Add to cart"} onClick={handleAddToCart} />
                     <Button className={"bg-orange-600 w-45 py-2 px-5 text-xl rounded"} icon={<Zap />} title={"Buy now"} />
                 </div>
             </div>

@@ -24,6 +24,7 @@ const submitReview =async(req, res) =>{
     }
 }
 
+
 const getUserReview = async(req, res) =>{
     try {
         const reviews = await Review.find({user_id: req.user._id}).populate('product_id')

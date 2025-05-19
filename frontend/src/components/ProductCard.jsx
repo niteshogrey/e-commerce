@@ -11,7 +11,7 @@ const ProductCard = ({ products }) => {
   console.log(products);
 const navigate = useNavigate()
   const handleProductDetails = async(productId) =>{
-    navigate(`/customer/product-details/${productId}`)
+    navigate(`/product-details/${productId}`)
   }
   
   // Calculate the average rating

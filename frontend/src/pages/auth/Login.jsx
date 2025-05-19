@@ -34,7 +34,7 @@ const Login = () => {
       if (user.role === "admin") {
         navigate("/admin");
       } else {
-        navigate("/customer");
+        navigate("/");
       }
     }
   }, [user, token, navigate]);

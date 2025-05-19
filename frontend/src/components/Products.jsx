@@ -20,7 +20,7 @@ const Products = () => {
   }
   return (
     <div div className="mt-5 bg-white p-5">
-      <h3 className="text-3xl font-semibold">Products</h3>
+      <h3 className="text-3xl font-semibold">Popular Products</h3>
       <div className="mt-6 flex flex-wrap justify-between">
         {
           product.map((item, index)=>(

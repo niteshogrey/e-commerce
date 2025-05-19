@@ -1,0 +1,101 @@
+const getProductsByCategoryId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { minPrice, maxPrice, brand, sort } = req.query;
+
+    console.log("Category ID:", id);
+    console.log("Filters:", { minPrice, maxPrice, brand, sort });
+
+    // Create a dynamic query object
+    const query = { category_id: id.trim() };
+
+    // Apply price filters if present
+    if (minPrice || maxPrice) {
+      query.price = {};
+      if (minPrice) query.price.$gte = parseFloat(minPrice);
+      if (maxPrice) query.price.$lte = parseFloat(maxPrice);
+    }
+
+    // Apply brand filter if present
+    if (brand) {
+      query.brand = { $regex: new RegExp(brand, "i") }; // case-insensitive
+    }
+
+    // Set sorting
+    let sortOption = {};
+    if (sort === "low-to-high") {
+      sortOption.price = 1;
+    } else if (sort === "high-to-low") {
+      sortOption.price = -1;
+    }
+
+    // Fetch the filtered products
+    const products = await Product.find(query).populate("category_id").sort(sortOption);
+
+    if (products.length === 0) {
+      return res.status(404).json({ error: "No products found for this category with the given filters" });
+    }
+
+    res.json(products);
+  } catch (err) {
+    console.error("Error fetching products:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
+Testing the Endpoint
+You can now test this API with different combinations of filters:
+
+1. Basic Category Products:
+
+bash
+Copy
+Edit
+GET /products/category/6817bf7ff573a80bbe86206e
+2. Price Range:
+
+bash
+Copy
+Edit
+GET /products/category/6817bf7ff573a80bbe86206e?minPrice=30000&maxPrice=80000
+3. Brand Filter:
+
+bash
+Copy
+Edit
+GET /products/category/6817bf7ff573a80bbe86206e?brand=Nokia
+4. Sorting Low to High:
+
+bash
+Copy
+Edit
+GET /products/category/6817bf7ff573a80bbe86206e?sort=low-to-high
+5. Sorting High to Low:
+
+bash
+Copy
+Edit
+GET /products/category/6817bf7ff573a80bbe86206e?sort=high-to-low
+6. Combined Filters:
+
+bash
+Copy
+Edit
+GET /products/category/6817bf7ff573a80bbe86206e?minPrice=30000&maxPrice=80000&brand=Nokia&sort=high-to-low
+Advantages of this Approach
+Flexible Filtering: Supports both price and brand filtering.
+
+Case-Insensitive Brand Search: Uses regular expressions for more user-friendly matching.
+
+Sorting Options: Easily switch between price sorting.
+
+Scalable: Can be extended for more advanced filters like ratings, stock availability, etc.
+
+Would you like me to guide you on adding pagination and search functionality to this endpoint as well? 😊
+
+
+
+
+
+

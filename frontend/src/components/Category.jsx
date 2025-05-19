@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoryApi } from "../redux/api/categoryApi";
+import { getProductByCategoryId } from "../redux/api/productApi";
+import { useNavigate } from "react-router-dom";
 
 const Category = () => {
   const { category, loading } = useSelector((state) => state.category);
   console.log(category);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllCategoryApi());
@@ -22,12 +25,16 @@ const Category = () => {
   return (
     <div className="mt-5 p-5 bg-white">
       <div>
-        <h3 className="text-3xl font-semibold">Categories</h3>
+        <h3 className="text-3xl font-semibold">Top Categories</h3>
       </div>
       <div className="flex gap-8 mt-9 overflow-x-auto scrollbar-hide p-1">
         {category.map((item, index) => (
           <div
             key={index}
+            onClick={() => {
+              dispatch(getProductByCategoryId(item._id));
+              navigate(`/products`);
+            }}
             className=" flex flex-col items-center justify-center bg-white rounded-full h-30 w-30 border shadow-md shrink-0 cursor-pointer hover:text-[#00f7ff] 
       hover:shadow-[0_0_5px_rgba(57,255,20,0.8),0_0_10px_rgba(57,255,200,0.9)] transition"
           >

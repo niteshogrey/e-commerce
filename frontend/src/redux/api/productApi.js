@@ -28,3 +28,18 @@ export const getProductById = createAsyncThunk(
     }
   }
 );
+
+export const getProductByCategoryId = createAsyncThunk(
+  "fetch/product-by-categoryId",
+  async (id, { rejectWithValue }) => {
+    try {
+      console.log("Category ID:", id);
+      const res = await axios.get(`${api}/product/get/by-category/${id}`);
+      console.log("Response Data:", res.data);
+      return res.data;
+    } catch (error) {
+      console.error("Error:", error);
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch products");
+    }
+  }
+);
